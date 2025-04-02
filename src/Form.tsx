@@ -1,13 +1,19 @@
 import {useState} from "react";
 
+interface FormProps{
+    wymowka: (m:string)=>void;
+}
 
-const Form =() => {
+
+
+const Form =(props: FormProps) => {
     const [textValue, setTextValue]= useState<string>("")
 
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault()
         console.log(textValue)
+
     }
 
     function handleTextInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -15,12 +21,12 @@ const Form =() => {
         setTextValue(event.target.value)
     }
     return(
-        <form>
+        <form onSubmit={handleSubmit}>
             <label>Imie:</label>
-            <input type="text" name="name" value={textValue} />
+            <input type="text" name="name" value={textValue} onChange={handleTextInputChange}/>
 
             <label>Powod wymowki</label>
-
+            <input type="text" name="wymowka" value={textValue} onChange={handleTextInputChange}/>
 
 
 
@@ -29,3 +35,4 @@ const Form =() => {
     )
 
 }
+export default Form
