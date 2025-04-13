@@ -64,13 +64,12 @@ input[type="checkbox"] {
     margin-right: 10px;
 }
 
-/* Styling for the "Urgent" checkbox */
 label input[type="checkbox"] {
     transform: scale(1.2);
     margin-left: 5px;
 }
 
-/* Add space between sections */
+
 br {
     margin-bottom: 15px;
 }
