@@ -1,21 +1,47 @@
-import './App.css'
-import Form from "./Form.tsx";
+import { useState, useEffect } from "react";
+import Form from "./Form";
+import ExcuseList from "./ExcuseList";
 
-function App() {
-    let listWymo = [];
-
-
-    function dajWymowke(w: string):void{
-       listWymo.push(w)
-    }
-
-
-  return (
-    <>
-      <Form wymowka={dajWymowke}/>
-
-    </>
-  )
+export interface Excuse {
+    id: string;
+    name: string;
+    reason: string;
+    credibility: number;
+    date: string;
+    creativity: string;
+    details: string;
+    urgent: boolean;
 }
 
-export default App
+function App() {
+    const [excuses, setExcuses] = useState<Excuse[]>([]);
+
+    useEffect(() => {
+        const saved = localStorage.getItem("excuses");
+        if (saved) {
+            setExcuses(JSON.parse(saved));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("excuses", JSON.stringify(excuses));
+    }, [excuses]);
+
+    function addExcuse(excuse: Excuse) {
+        setExcuses(prev => [...prev, excuse]);
+    }
+
+    function removeExcuse(id: string) {
+        setExcuses(prev => prev.filter(e => e.id !== id));
+    }
+
+    return (
+        <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
+            <h1>Generator Wymówek</h1>
+            <Form addExcuse={addExcuse} />
+            <ExcuseList excuses={excuses} removeExcuse={removeExcuse} />
+        </div>
+    );
+}
+
+export default App;
